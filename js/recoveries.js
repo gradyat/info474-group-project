@@ -56,9 +56,8 @@ start();
 // });
 
 function start() {
-  d3.csv("data/recoveries.csv", function(data) {
+  d3.json("data/recoveries.json", function(data) {
     let headerArray = d3.keys(data[0]);
-    // console.log(d3.keys(data[0]));
     days = headerArray.slice(4, headerArray.length - 1);
 
     d3.select("#dayMenu")
