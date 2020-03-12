@@ -14,6 +14,7 @@ This project explores cases of COVID-19, also known as novel coronavirus.
 - [Deaths Time Series](deaths-time-series.html)
 - [Confirmed Cases](confirmed-cases.html)
 - [Confirmed Cases Map - China](map.html)
+- [Recoveries Time Series](recoveries.html)
 
 ## Sources
 
