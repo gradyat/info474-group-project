@@ -56,7 +56,7 @@ start();
 // });
 
 function start() {
-  d3.csv("data/recoveries.csv", function(data) {
+  d3.json("data/recoveries.json", function(data) {
     let headerArray = d3.keys(data[0]);
     days = headerArray.slice(4, headerArray.length - 1);
 
@@ -88,7 +88,7 @@ function start() {
 }
 
 function makeChart(day) {
-  d3.csv("../data/recoveries.csv", function(error, data) {
+  d3.json("data/recoveries.json", function(error, data) {
     if (error) {
       console.error("Error getting or parsing the data.");
       throw error;
