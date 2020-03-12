@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Deaths Time Series</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" integrity="sha256-gzohnzxILb7OZZch6c8mySnK1r0yFviwmBR+1E5O0RM=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles/github-md-setup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <article class="markdown-body">
+        <h1><a href="https://gradyat.github.io/info474-group-project/">COVID-19 Vizualizations</a></h1>
+        <h2>Recoveries Time Series</h2>
+        <p>This bar chart vizualization shows the number of recoveries from COVID-19 per country/region. Colors identify the country. There are filters to show/hide countries. Hover over the bars to view a tooltip with more information.</p>
+        <div id="dayMenu" style="display:flex;flex-flow:row nowrap; align-items: center;justify-content: center;">
+            <p style="margin:20px">Day:</p>
+        </div>
+        
+<svg width="2960" height="640"></svg>
+</article>
+    
+    <script src="./js/recoveries.js"></script>
+</body>
+</html>
