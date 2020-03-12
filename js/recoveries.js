@@ -39,8 +39,7 @@
  *
  * @returns Chart function so that you can render the chart when ready
  */
-let day = "1/22/20";
-let tooltipSvg = "";
+let day = "3/10/20";
 
 start();
 
@@ -60,12 +59,11 @@ function start() {
   d3.csv("../data/recoveries.csv", function(data) {
     let headerArray = d3.keys(data[0]);
     days = headerArray.slice(4, headerArray.length - 1);
-    console.log(days);
 
     d3.select("#dayMenu")
       .append("select")
       .selectAll("option")
-      .data(days)
+      .data(days.reverse())
       .enter()
       .append("option")
       .attr("value", function(d) {
@@ -75,10 +73,13 @@ function start() {
         return d;
       });
 
+    // document.getElementById("dayMenu").value = "3/10/20";
+
     document.getElementById("dayMenu").addEventListener("change", function(d) {
-      console.log(d);
+      // console.log(d);
       day = d.srcElement.value;
       document.getElementById("this1").innerHTML = "";
+      // document.getElementById("tipSVG").innerHTML = "";
       makeChart(day);
     });
   });
@@ -144,12 +145,8 @@ function bubbleChart(day) {
       .style("text-align", "center")
       .style("font-family", "acumin pro, monospace")
       .style("width", "400px")
-      .style("height", "300px")
+      .style("height", "500px")
       .text("");
-
-    tooltipSvg = tooltip.append("svg");
-
-    console.log(tooltipSvg);
 
     var simulation = d3
       .forceSimulation(data)
@@ -222,91 +219,29 @@ function bubbleChart(day) {
         // return colorCircles((d[columnForColors]*2)*-1+1);
       })
       .on("mouseover", function(d) {
-        const area = d;
-
-        const dates = ["1/25/20", "2/10/20", "2/25/20", "3/09/20"];
-
-        const areaData = [
-          { date: "1/25/20", num: area[dates[1]] },
-          { date: "2/10/20", num: area[dates[2]] },
-          { date: "2/25/20", num: area[dates[3]] },
-          { date: "3/09/20", num: area[dates[4]] }
-        ];
-
-        areaData.forEach(function(d) {
-          d.date = d.date;
-          d.num = +d.num;
-        });
-
-        let x = d3
-          .scaleBand()
-          .rangeRound([0, 300])
-          .padding(0.1);
-        let y = d3.scaleLinear().rangeRound([200, 0]);
-
-        x.domain(
-          areaData.map(function(d) {
-            return d.date;
-          })
-        );
-        y.domain([
-          0,
-          d3.max(areaData, function(d) {
-            return d.num;
-          })
-        ]);
-
-        tooltipSvg
-          .append("g")
-          .attr("transform", "translate(0," + 200 + ")")
-          .call(d3.axisBottom(x))
-          .selectAll("text")
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", "-.55em")
-          .attr("transform", "rotate(-90)");
-
-        tooltipSvg
-          .append("g")
-          .call(d3.axisLeft(y))
-          .append("text")
-          .attr("fill", "#000")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", "0.71em")
-          .attr("text-anchor", "end")
-          .text("Recoveries");
-
-        tooltipSvg
-          .selectAll("bar")
-          .data(areaData)
-          .enter()
-          .append("rect")
-          .attr("class", "bar")
-          .attr("x", function(d) {
-            return x(d.date);
-          })
-          .attr("width", x.bandwidth())
-          .attr("y", function(d) {
-            5;
-          })
-          .attr("height", function(d) {
-            5;
-          });
-
         tooltip.html(
           d[columnForTitle] +
             "<br/>" +
             d[columnForSubtitle] +
             "<br/>" +
-            "Recoveries: " +
+            "Recoveries by  " +
+            day +
+            ": " +
             d[columnForRadius] +
             " " +
             unitName +
             "<br/>" +
-            tooltipSvg
+            // d["1/25/20"] +
+            // ", " +
+            // d["2/10/20"] +
+            // ", " +
+            // d["2/25/20"] +
+            // ", " +
+            // d["3/10/20"] +
+            "<div id='tipDiv'></div>"
         );
-        console.log(tooltipSvg);
+        document.getElementById("tipDiv").innerHTML = "";
+        plotTooltipSVG(d);
         return tooltip.style("visibility", "visible");
       })
       .on("mousemove", function() {
@@ -336,17 +271,27 @@ function bubbleChart(day) {
     // .text(title);
   }
 
-  function plotTooltip(area) {
-    console.log(area);
-
-    const dates = ["1/25/20", "2/10/20", "2/25/20", "3/09/20"];
+  function plotTooltipSVG(area) {
+    const dates = ["1/25/20", "2/10/20", "2/25/20", "3/9/20"];
 
     const areaData = [
-      { date: "1/25/20", num: area[dates[1]] },
-      { date: "2/10/20", num: area[dates[2]] },
-      { date: "2/25/20", num: area[dates[3]] },
-      { date: "3/09/20", num: area[dates[4]] }
+      { date: "1/25/20", num: area[dates[0]] },
+      { date: "2/10/20", num: area[dates[1]] },
+      { date: "2/25/20", num: area[dates[2]] },
+      { date: "3/9/20", num: area[dates[3]] }
     ];
+
+    var tMargin = { top: 20, right: 20, bottom: 70, left: 40 },
+      tWidth = 400 - tMargin.left - tMargin.right,
+      tHeight = 400 - tMargin.top - tMargin.bottom;
+
+    var tipSVG = d3
+      .select("#tipDiv")
+      .append("svg")
+      .attr("width", tWidth + tMargin.left + tMargin.right)
+      .attr("height", tHeight + tMargin.top + tMargin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + tMargin.left + "," + tMargin.top + ")");
 
     areaData.forEach(function(d) {
       d.date = d.date;
@@ -355,64 +300,84 @@ function bubbleChart(day) {
 
     let x = d3
       .scaleBand()
-      .rangeRound([0, 300])
+      .rangeRound([0, tWidth])
       .padding(0.1);
-    let y = d3.scaleLinear().rangeRound([200, 0]);
 
-    x.domain(
-      areaData.map(function(d) {
-        return d.date;
-      })
-    );
-    y.domain([
-      0,
-      d3.max(areaData, function(d) {
-        return d.num;
-      })
-    ]);
+    let y = d3.scaleLinear().rangeRound([tHeight, 0]);
+
+    x.domain(areaData.map(d => d.date));
+    y.domain([0, d3.max(areaData, d => d.num)]);
 
     // x.domain(Object.keys(areaData));
     // y.domain([0, d3.max(Object.values(areaData))]);
 
-    tooltipSvg
+    tipSVG
       .append("g")
-      .attr("transform", "translate(0," + 200 + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", "-.55em")
-      .attr("transform", "rotate(-90)");
+      .attr("class", "axis axis-x")
+      .attr("transform", `translate(0,${tHeight})`)
+      .call(d3.axisBottom(x));
 
-    tooltipSvg
+    tipSVG
       .append("g")
-      .call(d3.axisLeft(y))
-      .append("text")
-      .attr("fill", "#000")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", "0.71em")
-      .attr("text-anchor", "end")
-      .text("Recoveries");
+      .attr("class", "axis axis-y")
+      .call(d3.axisLeft(y).ticks(10));
 
-    tooltipSvg
-      .selectAll("bar")
+    // tipSVG
+    //   .append("g")
+    //   .attr("transform", "translate(0," + 200 + ")")
+    //   .call(d3.axisBottom(x))
+    //   .selectAll("text")
+    //   .style("text-anchor", "end")
+    //   .attr("dx", "-.8em")
+    //   .attr("dy", "-.55em")
+    //   .attr("transform", "rotate(-90)");
+
+    // tipSVG
+    //   .append("g")
+    //   .call(d3.axisLeft(y))
+    //   .append("text")
+    //   .attr("fill", "#000")
+    //   .attr("transform", "rotate(-90)")
+    //   .attr("y", 6)
+    //   .attr("dy", "0.71em")
+    //   .attr("text-anchor", "end")
+    //   .text("Recoveries");
+
+    tipSVG
+      .selectAll(".bar")
       .data(areaData)
       .enter()
       .append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) {
-        return x(d.date);
+      .attr("x", d => x(d.date))
+      .attr("y", d => {
+        return y(d.num);
       })
       .attr("width", x.bandwidth())
-      .attr("y", function(d) {
-        5;
-      })
-      .attr("height", function(d) {
-        5;
-      });
+      .attr("height", d => tHeight - y(d.num));
 
-    // return thingy;
+    // tipSVG
+    //   .selectAll("bar")
+    //   .data(areaData)
+    //   .enter()
+    //   .append("rect")
+    //   .attr("class", "bar")
+    //   .attr("x", function(d) {
+    //     return x(d.date);
+    //   })
+    //   .attr("width", x.bandwidth())
+    //   .attr("y", function(d) {
+    //     if (y(d.num).isNaN) {
+    //       return 0;
+    //     }
+    //     return y(d.num);
+    //   })
+    //   .attr("height", function(d) {
+    //     if (y(d.num).isNaN) {
+    //       return 0;
+    //     }
+    //     return y(d.num);
+    //   });
   }
 
   chart.width = chartWidth;

@@ -8,13 +8,31 @@
     <link rel="stylesheet" href="styles/github-md-setup.css">
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+
+        .bar{
+          fill: steelblue;
+        }
+      
+          .axis {
+            font: 10px sans-serif;
+          }
+      
+          .axis path,
+          .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+          }
+      
+    </style>
 </head>
 
 <body>
     <article class="markdown-body">
         <h1><a href="https://gradyat.github.io/info474-group-project/">COVID-19 Vizualizations</a></h1>
         <h2>Recoveries Time Series</h2>
-        <p>This bar chart vizualization shows the number of recoveries from COVID-19 per country/region. Colors identify the country. There are filters to show/hide countries. Hover over the bars to view a tooltip with more information.</p>
+        <p>This bar chart vizualization shows the number of total recoveries from COVID-19 per Province/State by the given date. Size and color of the circles identify the number of recoveries in each province. There is a filter to change the date. Hover over the circles to view a tooltip with more information about total recoveries over time in that area.</p>
         
         <div class="chart-example" id="chart" class="mx-auto" style="display:flex;flex-flow:column nowrap; align-items: center;justify-content: center;"> 
             <div id="dayMenu" style="display:flex;flex-flow:row nowrap; align-items: center;justify-content: center;">
