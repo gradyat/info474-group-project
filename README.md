@@ -7,12 +7,13 @@ This project explores cases of COVID-19, also known as novel coronavirus.
 - [Danfeng Yang](https://github.com/ydf1014)
 - [Zixiao Huang](https://github.com/zixiao0625)
 - [Grady Thompson](https://github.com/gradyat)
-- [Jacques Debar](https://github.com/jacquesdebar)
+- [Jacques DeBar](https://github.com/jacquesdebar)
 
 ## Vizzes
 
 - [Deaths Time Series](deaths-time-series.html)
 - [Confirmed Cases](confirmed-cases.html)
+- [Confirmed Cases Map - China](map.html)
 
 ## Sources
 
