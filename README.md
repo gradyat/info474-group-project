@@ -11,10 +11,10 @@ This project explores cases of COVID-19, also known as novel coronavirus.
 
 ## Vizzes
 
-- [Deaths Time Series](deaths-time-series.html)
-- [Confirmed Cases](confirmed-cases.html)
-- [Confirmed Cases Map - China](map.html)
-- [Recoveries Time Series](recoveries.html)
+- [Deaths Time Series](https://www.gradyt.com/info474-group-project/deaths-time-series.html)
+- [Confirmed Cases](https://www.gradyt.com/info474-group-project/confirmed-cases.html)
+- [Confirmed Cases Map - China](https://www.gradyt.com/info474-group-project/map.html)
+- [Recoveries Time Series](https://www.gradyt.com/info474-group-project/recoveries.html)
 
 ## Sources
 
